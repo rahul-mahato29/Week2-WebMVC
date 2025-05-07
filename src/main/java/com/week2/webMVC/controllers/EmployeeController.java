@@ -2,6 +2,7 @@ package com.week2.webMVC.controllers;
 
 import com.week2.webMVC.dto.EmployeeDTO;
 import com.week2.webMVC.services.EmployeeService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -62,8 +63,8 @@ public class EmployeeController {
     }
 
     @GetMapping(path = "/name/{empName}")
-    public List<EmployeeDTO> getEntity(@PathVariable(name = "empName") String name){
-        return employeeService.findByName(name);
+    public ResponseEntity<List<EmployeeDTO>> getEntity(@PathVariable(name = "empName") String name){
+        return ResponseEntity.ok(employeeService.findByName(name));
     }
 
     @GetMapping(path = "allEmployee")
@@ -72,18 +73,22 @@ public class EmployeeController {
     }
 
     @PutMapping(path = "/{employeeId}")
-    public EmployeeDTO updateEmployeeById(@RequestBody EmployeeDTO empDetails, @PathVariable(name = "employeeId") Long Id){
-        return employeeService.updateEmployeeById(Id, empDetails);
+    public ResponseEntity<EmployeeDTO> updateEmployeeById(@RequestBody EmployeeDTO empDetails, @PathVariable(name = "employeeId") Long Id){
+        return ResponseEntity.ok(employeeService.updateEmployeeById(Id, empDetails));
     }
 
     @DeleteMapping(path = "/{employeeId}")
-    public boolean deleteEmployeeById(@PathVariable(name = "employeeId") Long Id){
-        return employeeService.deleteEmployeeById(Id);
+    public ResponseEntity<Boolean> deleteEmployeeById(@PathVariable(name = "employeeId") Long Id){
+        boolean gotDeleted = employeeService.deleteEmployeeById(Id);
+        if(gotDeleted) return ResponseEntity.ok(true);
+        return ResponseEntity.notFound().build();
     }
 
     @PatchMapping(path = "/{employeeId}")
-    public EmployeeDTO updatePartialEmployeeById(@RequestBody Map<String, Object> updates, @PathVariable(name = "employeeId") Long Id){
-        return employeeService.updatePartialEmployeeById(Id, updates);
+    public ResponseEntity<EmployeeDTO> updatePartialEmployeeById(@RequestBody Map<String, Object> updates, @PathVariable(name = "employeeId") Long Id){
+        EmployeeDTO employeeDTO = employeeService.updatePartialEmployeeById(Id, updates);
+        if(employeeDTO == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(employeeDTO);
     }
 
 }
