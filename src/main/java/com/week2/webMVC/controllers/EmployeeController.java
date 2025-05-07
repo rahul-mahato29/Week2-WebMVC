@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/employee")
@@ -68,6 +69,21 @@ public class EmployeeController {
     @GetMapping(path = "allEmployee")
     public List<EmployeeDTO> getAllEmployee(){
         return employeeService.findAll();
+    }
+
+    @PutMapping(path = "/{employeeId}")
+    public EmployeeDTO updateEmployeeById(@RequestBody EmployeeDTO empDetails, @PathVariable(name = "employeeId") Long Id){
+        return employeeService.updateEmployeeById(Id, empDetails);
+    }
+
+    @DeleteMapping(path = "/{employeeId}")
+    public boolean deleteEmployeeById(@PathVariable(name = "employeeId") Long Id){
+        return employeeService.deleteEmployeeById(Id);
+    }
+
+    @PatchMapping(path = "/{employeeId}")
+    public EmployeeDTO updatePartialEmployeeById(@RequestBody Map<String, Object> updates, @PathVariable(name = "employeeId") Long Id){
+        return employeeService.updatePartialEmployeeById(Id, updates);
     }
 
 }
