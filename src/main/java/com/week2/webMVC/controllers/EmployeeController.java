@@ -22,7 +22,7 @@ public class EmployeeController {
 
     @GetMapping(path = "/{employeeId}")
     public EmployeeDTO getMessage(@PathVariable Long employeeId){
-        return new EmployeeDTO(employeeId, "Rahul Mahato", "rahul@gmail.com", 23, LocalDate.of(2023, 7, 6),true);
+        return new EmployeeDTO(employeeId, "Rahul Mahato", "rahul@gmail.com", 23, "ADMIN", 100000, LocalDate.of(2023, 7, 6),true);
     }
 
     @GetMapping

@@ -1,6 +1,6 @@
 package com.week2.webMVC.dto;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,10 +14,28 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class EmployeeDTO {
     private Long id;
-    @NotNull(message = "Name is required")
+    @NotBlank(message = "Name is required")
+    @Size(min = 3, max = 10, message = "Number of characters should be in range : [3,10]")
     private String name;
+
+    @Email(message = "Not a valid email ")
     private String email;
+
+    @Max(value = 80, message = "Age cannot be greater than 80")
+    @Min(value = 18, message = "Age cannot be less than 18")
     private Integer age;
+
+    @NotBlank(message = "Role of an employee cannot be blank")
+    @Pattern(regexp = "^(ADMIN|USER)$", message = "Role of Employee can either be USER or ADMIN")
+    private String role;
+
+    @NotNull
+    @Positive(message = "salary of employee should be positive")
+    @Digits(integer = 6, fraction = 2)
+    @DecimalMax(value = "100000.99")
+    @DecimalMin(value = "50000.00")
+    private Integer salary;
+
     private LocalDate dateOfJoining;
     private Boolean isActive;
 }
