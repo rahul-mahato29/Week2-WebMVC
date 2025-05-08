@@ -2,6 +2,7 @@ package com.week2.webMVC.controllers;
 
 import com.week2.webMVC.dto.EmployeeDTO;
 import com.week2.webMVC.services.EmployeeService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,7 +59,7 @@ public class EmployeeController {
 
     //service-layer
     @PostMapping(path = "/{createEmp}")
-    public EmployeeDTO createNewEmployee(@RequestBody EmployeeDTO newEmployee){
+    public EmployeeDTO createNewEmployee(@RequestBody @Valid EmployeeDTO newEmployee){
         return employeeService.save(newEmployee);
     }
 
