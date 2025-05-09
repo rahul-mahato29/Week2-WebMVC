@@ -1,5 +1,6 @@
 package com.week2.webMVC.dto;
 
+import com.week2.webMVC.annotation.EmployeeRoleValidation;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,7 +27,9 @@ public class EmployeeDTO {
     private Integer age;
 
     @NotBlank(message = "Role of an employee cannot be blank")
-    @Pattern(regexp = "^(ADMIN|USER)$", message = "Role of Employee can either be USER or ADMIN")
+//    @Pattern(regexp = "^(ADMIN|USER)$", message = "Role of Employee can either be USER or ADMIN")
+//    custom annotation - to validate the role should be either ADMIN or USER
+    @EmployeeRoleValidation
     private String role;
 
     @NotNull
