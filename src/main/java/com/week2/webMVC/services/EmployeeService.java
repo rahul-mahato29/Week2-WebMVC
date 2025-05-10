@@ -2,6 +2,7 @@ package com.week2.webMVC.services;
 
 import com.week2.webMVC.dto.EmployeeDTO;
 import com.week2.webMVC.entities.EmployeeEntity;
+import com.week2.webMVC.exceptions.ResourceNotFoundException;
 import com.week2.webMVC.repositories.EmployeeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.util.ReflectionUtils;
@@ -71,5 +72,12 @@ public class EmployeeService {
         });
 
         return modelMapper.map(employeeRepository.save(employeeEntity), EmployeeDTO.class);
+    }
+
+    //Exception-Handling
+    public EmployeeDTO getEmployeeById(Long id) {
+        EmployeeEntity employeeEntity = employeeRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + id));
+        return modelMapper.map(employeeEntity, EmployeeDTO.class);
     }
 }

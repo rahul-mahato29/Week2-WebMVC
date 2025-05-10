@@ -41,7 +41,7 @@ public class EmployeeController {
         return newEmployee;
     }
 
-    //Repository-Layer : not recommended to use "Repository" directly inside the controller
+//    Repository-Layer : not recommended to use "Repository" directly inside the controller
 //    @PostMapping(path = "/{createEmp}")
 //    public EmployeeDTO createNewEmployee(@RequestBody EmployeeDTO newEmployee){
 //        return employeeRepository.save(newEmployee);
@@ -89,6 +89,13 @@ public class EmployeeController {
     public ResponseEntity<EmployeeDTO> updatePartialEmployeeById(@RequestBody Map<String, Object> updates, @PathVariable(name = "employeeId") Long Id){
         EmployeeDTO employeeDTO = employeeService.updatePartialEmployeeById(Id, updates);
         if(employeeDTO == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(employeeDTO);
+    }
+
+    //Exception-Handling
+    @GetMapping(path = "/ById/{employeeId}")
+    public ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable(name = "employeeId") Long Id){
+        EmployeeDTO employeeDTO = employeeService.getEmployeeById(Id);
         return ResponseEntity.ok(employeeDTO);
     }
 
