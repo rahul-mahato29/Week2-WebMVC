@@ -19,4 +19,15 @@ public class GlobalExceptionHandler {
                 .build();
         return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
     }
+
+    //This will handle all the server error, except the above one, which is more precise
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiError> handleInternalServerError(Exception exception){
+        ApiError apiError = ApiError.builder()
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .message(exception.getMessage())
+                .build();
+        return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }
